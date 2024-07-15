@@ -141,7 +141,6 @@ fn ka_with_retries(ka: TcpKeepalive, retries: u32, dirty: &mut bool) -> TcpKeepa
 fn ka_with_retries(ka: TcpKeepalive, _: u32, _: &mut bool) -> TcpKeepalive {
     ka // no-op as keepalive retries is not supported on this platform
 }
-}
 
 
 // ===== impl HttpConnector =====
