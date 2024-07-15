@@ -96,10 +96,10 @@ ka = ka.with_time(time);
 dirty = true
 }
 if let Some(interval) = self.interval {
-ka = Self::ka_with_interval(ka, interval, &mut dirty)
+ka = self.ka_with_interval(ka, interval, &mut dirty)
 };
 if let Some(retries) = self.retries {
-ka = Self::ka_with_retries(ka, retries, &mut dirty)
+ka = self.ka_with_retries(ka, retries, &mut dirty)
 };
 if dirty {
 Some(ka)
