@@ -130,7 +130,7 @@ fn ka_with_retries(ka: TcpKeepalive, retries: u32, dirty: &mut bool) -> TcpKeepa
     *dirty = true;
     ka.with_retries(retries)
 }
-
+}
 #[cfg(any(
     target_os = "openbsd",
     target_os = "redox",
