@@ -96,10 +96,10 @@ ka = ka.with_time(time);
 dirty = true
 }
 if let Some(interval) = self.interval {
-ka = self.ka_with_interval(ka, interval, &mut dirty)
+ka = TcpKeepaliveConfig::ka_with_interval(ka, interval, &mut dirty)
 };
 if let Some(retries) = self.retries {
-ka = self.ka_with_retries(ka, retries, &mut dirty)
+ka = TcpKeepaliveConfig::ka_with_retries(ka, retries, &mut dirty)
 };
 if dirty {
 Some(ka)
@@ -108,13 +108,13 @@ None
 }
 }
 
-#[cfg(not(any(target_os = "openbsd", target_os = "redox", target_os = "solaris", target_os="espidf")))]
+#[cfg(not(any(target_os = "openbsd", target_os = "redox", target_os = "solaris", target_os = "espidf")))]
 fn ka_with_interval(ka: TcpKeepalive, interval: Duration, dirty: &mut bool) -> TcpKeepalive {
     *dirty = true;
     ka.with_interval(interval)
 }
 
-#[cfg(any(target_os = "openbsd", target_os = "redox", target_os = "solaris", target_os="espidf"))]
+#[cfg(any(target_os = "openbsd", target_os = "redox", target_os = "solaris", target_os = "espidf"))]
 fn ka_with_interval(ka: TcpKeepalive, _: Duration, _: &mut bool) -> TcpKeepalive {
     ka // no-op as keepalive interval is not supported on this platform
 }
@@ -124,7 +124,7 @@ fn ka_with_interval(ka: TcpKeepalive, _: Duration, _: &mut bool) -> TcpKeepalive
     target_os = "redox",
     target_os = "solaris",
     target_os = "windows",
-    target_os="espidf"
+    target_os = "espidf"
 )))]
 fn ka_with_retries(ka: TcpKeepalive, retries: u32, dirty: &mut bool) -> TcpKeepalive {
     *dirty = true;
@@ -136,7 +136,7 @@ fn ka_with_retries(ka: TcpKeepalive, retries: u32, dirty: &mut bool) -> TcpKeepa
     target_os = "redox",
     target_os = "solaris",
     target_os = "windows",
-    target_os="espidf"
+    target_os = "espidf"
 ))]
 fn ka_with_retries(ka: TcpKeepalive, _: u32, _: &mut bool) -> TcpKeepalive {
     ka // no-op as keepalive retries is not supported on this platform
